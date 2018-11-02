@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <View
+        android:id="@+id/x_cancle1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:orientation="horizontal">
+
+        <org.fonuhuolian.xrichtexteditor.XRoundImage
+            android:id="@+id/x_round1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:roundColor="#17499b" />
+
+        <org.fonuhuolian.xrichtexteditor.XRoundImage
+            android:id="@+id/x_round2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:roundColor="#4598a2" />
+
+        <org.fonuhuolian.xrichtexteditor.XRoundImage
+            android:id="@+id/x_round3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:roundColor="#e6a20a" />
+
+        <org.fonuhuolian.xrichtexteditor.XRoundImage
+            android:id="@+id/x_round4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:roundColor="#cb2635" />
+
+        <org.fonuhuolian.xrichtexteditor.XRoundImage
+            android:id="@+id/x_round5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:roundColor="#a96e99" />
+
+        <org.fonuhuolian.xrichtexteditor.XRoundImage
+            android:id="@+id/x_round6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:roundColor="#999999" />
+
+        <org.fonuhuolian.xrichtexteditor.XRoundImage
+            android:id="@+id/x_round7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:roundColor="#000000" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:orientation="horizontal">
+
+        <org.fonuhuolian.xrichtexteditor.XRoundImage
+            android:id="@+id/x_round8"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:roundColor="#d85821" />
+
+        <org.fonuhuolian.xrichtexteditor.XRoundImage
+            android:id="@+id/x_round9"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:roundColor="#eb3130" />
+
+        <org.fonuhuolian.xrichtexteditor.XRoundImage
+            android:id="@+id/x_round10"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:roundColor="#7417f3" />
+
+        <org.fonuhuolian.xrichtexteditor.XRoundImage
+            android:id="@+id/x_round11"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:roundColor="#3eabe1" />
+
+        <org.fonuhuolian.xrichtexteditor.XRoundImage
+            android:id="@+id/x_round12"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:roundColor="#76b53b" />
+
+        <org.fonuhuolian.xrichtexteditor.XRoundImage
+            android:id="@+id/x_round13"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:roundColor="#ad8265" />
+
+        <org.fonuhuolian.xrichtexteditor.XRoundImage
+            android:id="@+id/x_round14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:roundColor="#bb5e60" />
+
+    </LinearLayout>
+
+
+    <View
+        android:id="@+id/x_cancle4"
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
+
+</LinearLayout>

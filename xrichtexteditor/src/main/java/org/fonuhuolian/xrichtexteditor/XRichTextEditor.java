@@ -4,13 +4,14 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -30,15 +31,18 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
     private FrameLayout xUnderLine;
     private FrameLayout xItalic;
     private FrameLayout xSize;
+    private FrameLayout xColor;
 
 
-    private XIconText iconText;
     private PopupWindow mPopupWindow;
     private PopupWindow mPopupWindow2;
     private View cancle;
+    private View cancle2;
     private int screenHeight;
-    private int color;
     private String htmlText;
+    private XRichPicIconClickListener listener;
+
+    private boolean isLoadComplete = false;
 
 
     public XRichTextEditor(Context context) {
@@ -66,11 +70,23 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
 
         // 编辑器
         mEditor = ((RichEditor) this.findViewById(R.id.x_editor));
-        mEditor.setEditorFontSize(14);
-        color = Color.parseColor("#999999");
-        mEditor.setEditorFontColor(color);
-        mEditor.setPadding(10, 10, 10, 10);
-        mEditor.setPlaceholder("开始输入...");
+        mEditor.setFontSize(3);
+        mEditor.setEditorFontColor(Color.parseColor("#999999"));
+        mEditor.setPadding(20, 10, 20, 10);
+        mEditor.focusEditor();
+
+        mEditor.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+
+                if (newProgress != 100) {
+                    isLoadComplete = false;
+                } else {
+                    isLoadComplete = true;
+                }
+            }
+        });
 
 
         // 初始化popwindow
@@ -89,11 +105,6 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
             @Override
             public void onTextChange(String text) {
 
-                if (TextUtils.isEmpty(text)) {
-                    iconText.setTextColor(color);
-                    mEditor.setTextColor(color);
-                }
-
                 htmlText = text;
             }
         });
@@ -107,50 +118,58 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
                 LayoutParams.MATCH_PARENT);
         mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        contentView.findViewById(R.id.x_h1).setOnClickListener(new OnClickListener() {
+        contentView.findViewById(R.id.x_1).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mEditor.setHeading(1);
+                mEditor.setFontSize(1);
                 if (mPopupWindow != null)
                     mPopupWindow.dismiss();
             }
         });
-        contentView.findViewById(R.id.x_h2).setOnClickListener(new OnClickListener() {
+        contentView.findViewById(R.id.x_2).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mEditor.setHeading(2);
+                mEditor.setFontSize(2);
                 if (mPopupWindow != null)
                     mPopupWindow.dismiss();
             }
         });
-        contentView.findViewById(R.id.x_h3).setOnClickListener(new OnClickListener() {
+        contentView.findViewById(R.id.x_3).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mEditor.setHeading(3);
+                mEditor.setFontSize(3);
                 if (mPopupWindow != null)
                     mPopupWindow.dismiss();
             }
         });
-        contentView.findViewById(R.id.x_h4).setOnClickListener(new OnClickListener() {
+        contentView.findViewById(R.id.x_4).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mEditor.setHeading(4);
+                mEditor.setFontSize(4);
                 if (mPopupWindow != null)
                     mPopupWindow.dismiss();
             }
         });
-        contentView.findViewById(R.id.x_h5).setOnClickListener(new OnClickListener() {
+        contentView.findViewById(R.id.x_5).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mEditor.setHeading(5);
+                mEditor.setFontSize(5);
                 if (mPopupWindow != null)
                     mPopupWindow.dismiss();
             }
         });
-        contentView.findViewById(R.id.x_h6).setOnClickListener(new OnClickListener() {
+        contentView.findViewById(R.id.x_7).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mEditor.setHeading(6);
+                mEditor.setFontSize(7);
+                if (mPopupWindow != null)
+                    mPopupWindow.dismiss();
+            }
+        });
+        contentView.findViewById(R.id.x_6).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mEditor.setFontSize(6);
                 if (mPopupWindow != null)
                     mPopupWindow.dismiss();
             }
@@ -222,8 +241,8 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
             }
         });
 
-        cancle = contentView.findViewById(R.id.x_cancle4);
-        cancle.setOnClickListener(new OnClickListener() {
+        cancle2 = contentView.findViewById(R.id.x_cancle4);
+        cancle2.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mPopupWindow2 != null)
@@ -308,9 +327,8 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
 
 
         // 字体颜色
-        iconText = ((XIconText) this.findViewById(R.id.x_color));
-        iconText.setTextColor(color);
-        iconText.setOnClickListener(new OnClickListener() {
+        xColor = ((FrameLayout) this.findViewById(R.id.x_color));
+        xColor.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -318,7 +336,7 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
                 int[] location = new int[2];
                 mLayout.getLocationOnScreen(location);
 
-                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) cancle.getLayoutParams();
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) cancle2.getLayoutParams();
 
                 if (screenHeight - location[1] == dp2px(mContext, 44)) {
                     params.height = dp2px(mContext, 48);
@@ -329,6 +347,16 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
                 mPopupWindow2.showAtLocation(mLayout, Gravity.NO_GRAVITY, 0, 0);
             }
         });
+
+
+        // 拍照
+        this.findViewById(R.id.x_photo).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null)
+                    listener.clickPicIcon();
+            }
+        });
     }
 
     public static int dp2px(Context context, float dipValue) {
@@ -336,21 +364,29 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
         return (int) (dipValue * scale + 0.5f);
     }
 
+    public void setListener(XRichPicIconClickListener listener) {
+        this.listener = listener;
+    }
+
     @Override
     public void onClick(View v) {
-
-        color = ((XRoundImage) v).getBgColor();
-
 
         if (mPopupWindow2 != null)
             mPopupWindow2.dismiss();
 
-        mEditor.setTextColor(color);
-        iconText.setTextColor(color);
+        mEditor.setTextColor(((XRoundImage) v).getBgColor());
     }
 
 
     public void insertImage(String url, String alt) {
         mEditor.insertImage(url, alt);
+    }
+
+    public String getHtmlText() {
+        return htmlText;
+    }
+
+    public boolean isLoadComplete() {
+        return isLoadComplete;
     }
 }

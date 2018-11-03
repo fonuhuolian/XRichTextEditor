@@ -8,8 +8,9 @@
 
 
     <org.fonuhuolian.xrichtexteditor.XRichTextEditor
+        android:id="@+id/e"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></org.fonuhuolian.xrichtexteditor.XRichTextEditor>
+        android:layout_height="match_parent" />
 
 
 </FrameLayout>

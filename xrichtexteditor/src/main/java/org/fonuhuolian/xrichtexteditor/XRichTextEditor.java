@@ -389,4 +389,24 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
     public boolean isLoadComplete() {
         return isLoadComplete;
     }
+
+    public boolean isShowPop() {
+
+        return mPopupWindow.isShowing() || mPopupWindow2.isShowing();
+    }
+
+    public void closePop() {
+
+        if (mPopupWindow != null && mPopupWindow.isShowing()) {
+            mPopupWindow.dismiss();
+        }
+
+        if (mPopupWindow2 != null && mPopupWindow2.isShowing()) {
+            mPopupWindow2.dismiss();
+        }
+    }
+
+    public void setContent(String htmlText) {
+        mEditor.setHtml(htmlText);
+    }
 }

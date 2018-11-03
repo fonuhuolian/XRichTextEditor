@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -408,5 +409,25 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
 
     public void setContent(String htmlText) {
         mEditor.setHtml(htmlText);
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
+            if (isShowPop()) {
+                closePop();
+                return true;
+            }
+        }
+        return super.dispatchKeyEvent(event);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (isShowPop()) {
+            closePop();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

@@ -44,6 +44,7 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
     private XRichPicIconClickListener listener;
 
     private boolean isLoadComplete = false;
+    private boolean isRevised = false;
 
 
     public XRichTextEditor(Context context) {
@@ -107,6 +108,7 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
             public void onTextChange(String text) {
 
                 htmlText = text;
+                isRevised = true;
             }
         });
     }
@@ -363,6 +365,10 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
     public static int dp2px(Context context, float dipValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dipValue * scale + 0.5f);
+    }
+
+    public boolean isRevisedTextContent() {
+        return isRevised;
     }
 
     public void setListener(XRichPicIconClickListener listener) {

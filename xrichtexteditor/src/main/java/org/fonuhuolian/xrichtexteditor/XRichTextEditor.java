@@ -1,11 +1,13 @@
 package org.fonuhuolian.xrichtexteditor;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -60,6 +62,8 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
 
         mContext = context;
 
+        ((Activity) context).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
         // 获取屏幕像素高
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics dm = new DisplayMetrics();
@@ -109,6 +113,25 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
 
                 htmlText = text;
                 isRevised = true;
+            }
+        });
+
+        new SoftKeyBroadManager(mContext, this).addSoftKeyboardStateListener(new SoftKeyBroadManager.SoftKeyboardStateListener() {
+            @Override
+            public void onSoftKeyboardOpened(int keyboardHeightInPx) {
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mLayout.getLayoutParams();
+                Log.e("Dd", layoutParams.bottomMargin + "");
+                layoutParams.bottomMargin = keyboardHeightInPx;
+                mLayout.setLayoutParams(layoutParams);
+                Log.e("Dd", keyboardHeightInPx + "");
+                Log.e("Dd", layoutParams.bottomMargin + "");
+            }
+
+            @Override
+            public void onSoftKeyboardClosed() {
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mLayout.getLayoutParams();
+                layoutParams.bottomMargin = 0;
+                mLayout.setLayoutParams(layoutParams);
             }
         });
     }

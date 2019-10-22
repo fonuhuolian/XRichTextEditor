@@ -7,7 +7,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -47,7 +46,6 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
 
     private boolean isLoadComplete = false;
     private boolean isRevised = false;
-
 
     public XRichTextEditor(Context context) {
         this(context, null);
@@ -120,11 +118,8 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
             @Override
             public void onSoftKeyboardOpened(int keyboardHeightInPx) {
                 LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mLayout.getLayoutParams();
-                Log.e("Dd", layoutParams.bottomMargin + "");
                 layoutParams.bottomMargin = keyboardHeightInPx;
                 mLayout.setLayoutParams(layoutParams);
-                Log.e("Dd", keyboardHeightInPx + "");
-                Log.e("Dd", layoutParams.bottomMargin + "");
             }
 
             @Override
@@ -438,6 +433,13 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
 
     public void setContent(String htmlText) {
         mEditor.setHtml(htmlText);
+    }
+
+    public void onRestart() {
+
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mLayout.getLayoutParams();
+        layoutParams.bottomMargin = 0;
+        mLayout.setLayoutParams(layoutParams);
     }
 
     @Override

@@ -11,6 +11,8 @@ import java.util.List;
 
 public class SoftKeyBroadManager implements ViewTreeObserver.OnGlobalLayoutListener {
 
+    private boolean isFirst = true;//只用获取一次
+
     public interface SoftKeyboardStateListener {
         void onSoftKeyboardOpened(int keyboardHeightInPx);
 
@@ -22,6 +24,7 @@ public class SoftKeyBroadManager implements ViewTreeObserver.OnGlobalLayoutListe
     private int lastSoftKeyboardHeightInPx;
     private boolean isSoftKeyboardOpened;
     private int statusBarHeight = 0;
+    private int navigationBarHeight = 0;
     private Context activity;
 
     public SoftKeyBroadManager(Context activity, View activityRootView) {
@@ -37,25 +40,66 @@ public class SoftKeyBroadManager implements ViewTreeObserver.OnGlobalLayoutListe
 
     @Override
     public void onGlobalLayout() {
+
         final Rect r = new Rect();
         activityRootView.getWindowVisibleDisplayFrame(r);
 
-        final int heightDiff = activityRootView.getRootView().getHeight() - (r.bottom - r.top);
+        int height = activityRootView.getRootView().getHeight();
 
-        try {
-            Class<?> c = Class.forName("com.android.internal.R$dimen");
-            Object obj = c.newInstance();
-            Field field = c.getField("status_bar_height");
-            int x = Integer.parseInt(field.get(obj).toString());
-            statusBarHeight = activity.getResources().getDimensionPixelSize(x);
-        } catch (Exception e) {
-            e.printStackTrace();
+
+        // 不可见区域
+        final int heightDiff = height - (r.bottom - r.top);
+        // 可见区域
+        int heightVisible = height - heightDiff;
+
+        if (isFirst) {
+
+            try {
+                Class<?> c = Class.forName("com.android.internal.R$dimen");
+                Object obj = c.newInstance();
+                Field field = c.getField("status_bar_height");
+                int x = Integer.parseInt(field.get(obj).toString());
+                statusBarHeight = activity.getResources().getDimensionPixelSize(x);
+
+                Field field2 = c.getField("navigation_bar_height");
+                int x2 = Integer.parseInt(field2.get(obj).toString());
+                navigationBarHeight = activity.getResources().getDimensionPixelSize(x2);
+
+                if (heightDiff < 500) {
+
+                    if (r.top != 0) {
+                        // 无沉浸式
+                        if (height - r.top > heightVisible) {
+                            // 有底部导航啦
+                            // 不做操作
+                        } else {
+                            // 无底部导航啦
+                            navigationBarHeight = 0;
+                        }
+                    } else {
+                        // 沉浸式
+                        if (height - r.top > heightVisible) {
+                            // 有底部导航啦
+                            statusBarHeight = 0;
+                        } else {
+                            // 无底部导航啦
+                            navigationBarHeight = 0;
+                            statusBarHeight = 0;
+                        }
+                    }
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            isFirst = false;
         }
 
         if (!isSoftKeyboardOpened && heightDiff > 500) {
             // 如果高度超过500 键盘可能被打开
             isSoftKeyboardOpened = true;
-            notifyOnSoftKeyboardOpened(heightDiff - statusBarHeight);
+            notifyOnSoftKeyboardOpened(heightDiff - statusBarHeight - navigationBarHeight);
         } else if (isSoftKeyboardOpened && heightDiff < 500) {
             isSoftKeyboardOpened = false;
             notifyOnSoftKeyboardClosed();

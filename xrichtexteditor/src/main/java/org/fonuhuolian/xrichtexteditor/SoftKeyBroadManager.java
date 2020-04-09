@@ -14,7 +14,7 @@ public class SoftKeyBroadManager implements ViewTreeObserver.OnGlobalLayoutListe
     private boolean isFirst = true;//只用获取一次
 
     public interface SoftKeyboardStateListener {
-        void onSoftKeyboardOpened(int keyboardHeightInPx);
+        void onSoftKeyboardOpened(int keyboardHeightInPx, int systemBarHeight);
 
         void onSoftKeyboardClosed();
     }
@@ -99,7 +99,7 @@ public class SoftKeyBroadManager implements ViewTreeObserver.OnGlobalLayoutListe
         if (!isSoftKeyboardOpened && heightDiff > 500) {
             // 如果高度超过500 键盘可能被打开
             isSoftKeyboardOpened = true;
-            notifyOnSoftKeyboardOpened(heightDiff - statusBarHeight - navigationBarHeight);
+            notifyOnSoftKeyboardOpened(heightDiff - statusBarHeight - navigationBarHeight, statusBarHeight + navigationBarHeight);
         } else if (isSoftKeyboardOpened && heightDiff < 500) {
             isSoftKeyboardOpened = false;
             notifyOnSoftKeyboardClosed();
@@ -127,12 +127,12 @@ public class SoftKeyBroadManager implements ViewTreeObserver.OnGlobalLayoutListe
         listeners.remove(listener);
     }
 
-    private void notifyOnSoftKeyboardOpened(int keyboardHeightInPx) {
+    private void notifyOnSoftKeyboardOpened(int keyboardHeightInPx, int systemBarHeight) {
         this.lastSoftKeyboardHeightInPx = keyboardHeightInPx;
 
         for (SoftKeyboardStateListener listener : listeners) {
             if (listener != null) {
-                listener.onSoftKeyboardOpened(keyboardHeightInPx);
+                listener.onSoftKeyboardOpened(keyboardHeightInPx, systemBarHeight);
             }
         }
     }

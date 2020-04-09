@@ -26,6 +26,7 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
 
     private RichEditor mEditor;
     private LinearLayout mLayout;
+    private FrameLayout mRootLayout;
 
     private FrameLayout xBack;
     private FrameLayout xGo;
@@ -71,6 +72,7 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
         // 加载布局
         LayoutInflater.from(context).inflate(R.layout.x_rich_text_editor, this, true);
         mLayout = ((LinearLayout) this.findViewById(R.id.x_layout));
+        mRootLayout = ((FrameLayout) this.findViewById(R.id.rootLayout));
 
         // 编辑器
         mEditor = ((RichEditor) this.findViewById(R.id.x_editor));
@@ -115,10 +117,18 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
         });
 
         new SoftKeyBroadManager(mContext, this).addSoftKeyboardStateListener(new SoftKeyBroadManager.SoftKeyboardStateListener() {
+
+
             @Override
-            public void onSoftKeyboardOpened(int keyboardHeightInPx) {
+            public void onSoftKeyboardOpened(int keyboardHeightInPx, int systemBarHeight) {
+
                 FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mLayout.getLayoutParams();
-                layoutParams.bottomMargin = dp2px(mContext, 44);
+
+                if (Math.abs(screenHeight - (mLayout.getHeight() + mEditor.getHeight() + systemBarHeight)) < 500) {
+                    layoutParams.bottomMargin = keyboardHeightInPx;
+                } else {
+                    layoutParams.bottomMargin = dp2px(mContext, 44);
+                }
                 mLayout.setLayoutParams(layoutParams);
             }
 

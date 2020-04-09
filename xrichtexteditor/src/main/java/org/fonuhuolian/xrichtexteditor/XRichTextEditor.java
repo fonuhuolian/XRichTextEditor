@@ -117,14 +117,14 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
         new SoftKeyBroadManager(mContext, this).addSoftKeyboardStateListener(new SoftKeyBroadManager.SoftKeyboardStateListener() {
             @Override
             public void onSoftKeyboardOpened(int keyboardHeightInPx) {
-                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mLayout.getLayoutParams();
-                layoutParams.bottomMargin = keyboardHeightInPx;
+                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mLayout.getLayoutParams();
+                layoutParams.bottomMargin = dp2px(mContext, 44);
                 mLayout.setLayoutParams(layoutParams);
             }
 
             @Override
             public void onSoftKeyboardClosed() {
-                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mLayout.getLayoutParams();
+                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mLayout.getLayoutParams();
                 layoutParams.bottomMargin = 0;
                 mLayout.setLayoutParams(layoutParams);
             }

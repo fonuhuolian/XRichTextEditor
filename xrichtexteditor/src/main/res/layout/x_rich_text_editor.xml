@@ -10,7 +10,7 @@
         android:id="@+id/x_editor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="44dp" />
+        android:paddingBottom="44dp" />
 
     <LinearLayout
         android:id="@+id/x_layout"

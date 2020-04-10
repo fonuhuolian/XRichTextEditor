@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -48,18 +49,23 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
     private boolean isLoadComplete = false;
     private boolean isRevised = false;
 
+    private int RICK_LAYOUT_HEIGHT = 0;
+
     public XRichTextEditor(Context context) {
         this(context, null);
     }
 
     public XRichTextEditor(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
+
+
     }
 
     public XRichTextEditor(final Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         mContext = context;
+
 
         ((Activity) context).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
@@ -117,28 +123,31 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
         });
 
         new SoftKeyBroadManager(mContext, this).addSoftKeyboardStateListener(new SoftKeyBroadManager.SoftKeyboardStateListener() {
-
-
             @Override
-            public void onSoftKeyboardOpened(int keyboardHeightInPx, int systemBarHeight) {
+            public void onSoftKeyboardOpened(int keyboardHeightInPx, int heightVisible, int statusBarHeight, int navigationBarHeight) {
+                ViewGroup.LayoutParams layoutParams = mRootLayout.getLayoutParams();
+                layoutParams.height = RICK_LAYOUT_HEIGHT - keyboardHeightInPx;
+                mRootLayout.setLayoutParams(layoutParams);
 
-                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mLayout.getLayoutParams();
-
-                if (Math.abs(screenHeight - (mLayout.getHeight() + mEditor.getHeight() + systemBarHeight)) < 500) {
-                    layoutParams.bottomMargin = keyboardHeightInPx;
-                } else {
-                    layoutParams.bottomMargin = dp2px(mContext, 44);
-                }
-                mLayout.setLayoutParams(layoutParams);
             }
 
             @Override
-            public void onSoftKeyboardClosed() {
-                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mLayout.getLayoutParams();
-                layoutParams.bottomMargin = 0;
-                mLayout.setLayoutParams(layoutParams);
+            public void onSoftKeyboardClosed(int heightVisible, int statusBarHeight, int navigationBarHeight) {
+                ViewGroup.LayoutParams layoutParams = mRootLayout.getLayoutParams();
+                layoutParams.height = RICK_LAYOUT_HEIGHT;
+                mRootLayout.setLayoutParams(layoutParams);
+            }
+
+        });
+
+
+        this.post(new Runnable() {
+            @Override
+            public void run() {
+                RICK_LAYOUT_HEIGHT = mRootLayout.getHeight();
             }
         });
+
     }
 
 

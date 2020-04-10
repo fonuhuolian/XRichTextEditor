@@ -14,9 +14,9 @@ public class SoftKeyBroadManager implements ViewTreeObserver.OnGlobalLayoutListe
     private boolean isFirst = true;//只用获取一次
 
     public interface SoftKeyboardStateListener {
-        void onSoftKeyboardOpened(int keyboardHeightInPx, int systemBarHeight);
+        void onSoftKeyboardOpened(int keyboardHeightInPx, int heightVisible, int statusBarHeight, int navigationBarHeight);
 
-        void onSoftKeyboardClosed();
+        void onSoftKeyboardClosed(int heightVisible, int statusBarHeight, int navigationBarHeight);
     }
 
     private final List<SoftKeyboardStateListener> listeners = new LinkedList<SoftKeyboardStateListener>();
@@ -99,10 +99,10 @@ public class SoftKeyBroadManager implements ViewTreeObserver.OnGlobalLayoutListe
         if (!isSoftKeyboardOpened && heightDiff > 500) {
             // 如果高度超过500 键盘可能被打开
             isSoftKeyboardOpened = true;
-            notifyOnSoftKeyboardOpened(heightDiff - statusBarHeight - navigationBarHeight, statusBarHeight + navigationBarHeight);
+            notifyOnSoftKeyboardOpened(heightDiff - statusBarHeight - navigationBarHeight, heightVisible, statusBarHeight, navigationBarHeight);
         } else if (isSoftKeyboardOpened && heightDiff < 500) {
             isSoftKeyboardOpened = false;
-            notifyOnSoftKeyboardClosed();
+            notifyOnSoftKeyboardClosed(heightVisible, statusBarHeight, navigationBarHeight);
         }
     }
 
@@ -127,20 +127,20 @@ public class SoftKeyBroadManager implements ViewTreeObserver.OnGlobalLayoutListe
         listeners.remove(listener);
     }
 
-    private void notifyOnSoftKeyboardOpened(int keyboardHeightInPx, int systemBarHeight) {
+    private void notifyOnSoftKeyboardOpened(int keyboardHeightInPx, int heightVisible, int statusBarHeight, int navigationBarHeight) {
         this.lastSoftKeyboardHeightInPx = keyboardHeightInPx;
 
         for (SoftKeyboardStateListener listener : listeners) {
             if (listener != null) {
-                listener.onSoftKeyboardOpened(keyboardHeightInPx, systemBarHeight);
+                listener.onSoftKeyboardOpened(keyboardHeightInPx, heightVisible, statusBarHeight, navigationBarHeight);
             }
         }
     }
 
-    private void notifyOnSoftKeyboardClosed() {
+    private void notifyOnSoftKeyboardClosed(int heightVisible, int statusBarHeight, int navigationBarHeight) {
         for (SoftKeyboardStateListener listener : listeners) {
             if (listener != null) {
-                listener.onSoftKeyboardClosed();
+                listener.onSoftKeyboardClosed(heightVisible, statusBarHeight, navigationBarHeight);
             }
         }
     }

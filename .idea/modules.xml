@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Documents-GitHub-XRichTextEditor.iml" filepath="$PROJECT_DIR$/.idea/modules/Documents-GitHub-XRichTextEditor.iml" group="XRichTextEditor" />
       <module fileurl="file://$PROJECT_DIR$/GitHub-XRichTextEditor.iml" filepath="$PROJECT_DIR$/GitHub-XRichTextEditor.iml" group="XRichTextEditor" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/GitHub-XRichTextEditor-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/GitHub-XRichTextEditor-app.iml" group="XRichTextEditor/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/xrichtexteditor/GitHub-XRichTextEditor-xrichtexteditor.iml" filepath="$PROJECT_DIR$/.idea/modules/xrichtexteditor/GitHub-XRichTextEditor-xrichtexteditor.iml" group="XRichTextEditor/xrichtexteditor" />
       <module fileurl="file://$PROJECT_DIR$/XRichTextEditor.iml" filepath="$PROJECT_DIR$/XRichTextEditor.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/XRichTextEditor-app.iml" filepath="$PROJECT_DIR$/app/XRichTextEditor-app.iml" group="XRichTextEditor/app" />
       <module fileurl="file://$PROJECT_DIR$/xrichtexteditor/XRichTextEditor-xrichtexteditor.iml" filepath="$PROJECT_DIR$/xrichtexteditor/XRichTextEditor-xrichtexteditor.iml" group="XRichTextEditor/xrichtexteditor" />

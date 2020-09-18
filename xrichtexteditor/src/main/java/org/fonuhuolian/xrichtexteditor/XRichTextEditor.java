@@ -399,7 +399,7 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
         });
     }
 
-    public static int dp2px(Context context, float dipValue) {
+    private static int dp2px(Context context, float dipValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dipValue * scale + 0.5f);
     }
@@ -410,6 +410,24 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
 
     public void setListener(XRichPicIconClickListener listener) {
         this.listener = listener;
+    }
+
+    /**
+     * TODO 转换Email回复格式
+     *
+     * @param quotations  引用的String eg. 发件人：1334@qq.com\n收件人:xxx@qq.com\n日期:...
+     * @param contentHtml 具体邮件的内容html
+     */
+    public String covertEmailHtml(String quotations, String contentHtml) {
+        quotations = quotations.replaceAll("\\\\n", "<br>");
+        quotations = quotations.replaceAll("\n", "<br>");
+        quotations = quotations.replaceAll("\\\\r", "<br>");
+        quotations = quotations.replaceAll("\r", "<br>");
+        quotations = "<br><br><br><br><font color=\"#282828\" size=\"2\"><b>--原始邮件--<br><br></b></font><span style=\"background-color: #F1F1F1;width:calc(100% - 24px);display:-moz-inline-box;display:inline-block;border-radius:5px;padding:10px 5px 15px 20px;line-height:23px;font-size:13px;\">" + quotations;
+        quotations = quotations + "</span><br><br><br><br>";
+        quotations = quotations + contentHtml;
+
+        return quotations;
     }
 
     @Override

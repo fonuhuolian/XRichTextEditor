@@ -47,7 +47,7 @@ xEditor.setContent();
 xEditor.isLoadComplete();
 // 获取富文本的html文本
 xEditor.getHtmlText();
-// 转换chengEmail样式的html文本
+// 转换成Email样式的html文本
 xEditor.covertEmailHtml(String quotations, String contentHtml);
 ```
 四、感谢 `wasabeef`提供富文本库

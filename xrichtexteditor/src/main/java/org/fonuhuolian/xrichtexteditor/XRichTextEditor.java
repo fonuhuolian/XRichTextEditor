@@ -418,7 +418,7 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
      * @param quotations  引用的String eg. 发件人：1334@qq.com\n收件人:xxx@qq.com\n日期:...
      * @param contentHtml 具体邮件的内容html
      */
-    public String covertEmailHtml(String quotations, String contentHtml) {
+    public static String covertEmailHtml(String quotations, String contentHtml) {
         quotations = quotations.replaceAll("\\\\n", "<br>");
         quotations = quotations.replaceAll("\n", "<br>");
         quotations = quotations.replaceAll("\\\\r", "<br>");

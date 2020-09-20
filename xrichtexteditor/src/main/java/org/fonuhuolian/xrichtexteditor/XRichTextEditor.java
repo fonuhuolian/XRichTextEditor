@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -122,13 +123,19 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
             }
         });
 
+        mEditor.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                mLayout.setVisibility(b ? VISIBLE : GONE);
+            }
+        });
+
         new SoftKeyBroadManager(mContext, this).addSoftKeyboardStateListener(new SoftKeyBroadManager.SoftKeyboardStateListener() {
             @Override
             public void onSoftKeyboardOpened(int keyboardHeightInPx, int heightVisible, int statusBarHeight, int navigationBarHeight) {
                 ViewGroup.LayoutParams layoutParams = mRootLayout.getLayoutParams();
                 layoutParams.height = RICK_LAYOUT_HEIGHT - keyboardHeightInPx;
                 mRootLayout.setLayoutParams(layoutParams);
-
             }
 
             @Override
@@ -136,6 +143,7 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
                 ViewGroup.LayoutParams layoutParams = mRootLayout.getLayoutParams();
                 layoutParams.height = RICK_LAYOUT_HEIGHT;
                 mRootLayout.setLayoutParams(layoutParams);
+                mLayout.setVisibility(VISIBLE);
             }
 
         });

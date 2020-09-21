@@ -17,7 +17,7 @@ allprojects {
 ```
 `module build.gradle `
 ```
-implementation 'com.github.fonuhuolian:XRichTextEditor:1.2.3'
+implementation 'com.github.fonuhuolian:XRichTextEditor:1.2.4'
 ```
 
 二、xml
@@ -49,6 +49,8 @@ xEditor.isLoadComplete();
 xEditor.getHtmlText();
 // 转换成Email样式的html文本
 XRichTextEditor.covertEmailHtml(String quotations, String contentHtml);
+// 转换超文本转换为普通文字
+XRichTextEditor.convertHTMLToText(String htmlStr);
 ```
 四、感谢 `wasabeef`提供富文本库
 

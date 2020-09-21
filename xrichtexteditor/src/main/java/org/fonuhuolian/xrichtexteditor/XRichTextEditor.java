@@ -20,6 +20,9 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import jp.wasabeef.richeditor.RichEditor;
 
 public class XRichTextEditor extends FrameLayout implements View.OnClickListener {
@@ -436,6 +439,20 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
         quotations = quotations + contentHtml;
 
         return quotations;
+    }
+
+    // TODO 转换超文本转换为普通文字
+    public static String convertHTMLToText(String htmlStr) {
+
+        //先将换行符保留，然后过滤标签
+        Pattern p_enter = Pattern.compile("<br/>", Pattern.CASE_INSENSITIVE);
+        Matcher m_enter = p_enter.matcher(htmlStr);
+        htmlStr = m_enter.replaceAll("\n");
+
+        //过滤html标签
+        Pattern p_html = Pattern.compile("<[^>]+>", Pattern.CASE_INSENSITIVE);
+        Matcher m_html = p_html.matcher(htmlStr);
+        return m_html.replaceAll("");
     }
 
     @Override

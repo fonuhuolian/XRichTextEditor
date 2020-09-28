@@ -2,12 +2,12 @@ package org.fonuhuolian.xrichtexteditor;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -78,6 +78,7 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
         DisplayMetrics dm = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(dm);
         screenHeight = dm.heightPixels;
+        float density = dm.density;       // 屏幕密度（像素比例：0.75/1.0/1.5/2.0,3.0,4等）
 
         // 加载布局
         LayoutInflater.from(context).inflate(R.layout.x_rich_text_editor, this, true);
@@ -88,7 +89,45 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
         mEditor = ((RichEditor) this.findViewById(R.id.x_editor));
         mEditor.setFontSize(3);
         mEditor.setEditorFontColor(Color.parseColor("#999999"));
-        mEditor.setPadding(20, 10, 20, 10);
+
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.XRichTextEditor);
+        float padding = ta.getDimension(R.styleable.XRichTextEditor_x_rich_padding, 0);
+        float paddingLeft = ta.getDimension(R.styleable.XRichTextEditor_x_rich_paddingLeft, 0);
+        float paddingRight = ta.getDimension(R.styleable.XRichTextEditor_x_rich_paddingRight, 0);
+        float paddingTop = ta.getDimension(R.styleable.XRichTextEditor_x_rich_paddingTop, 0);
+        float paddingBottom = ta.getDimension(R.styleable.XRichTextEditor_x_rich_paddingBottom, 0);
+
+        if (ta.getText(R.styleable.XRichTextEditor_x_rich_padding) != null && ta.getText(R.styleable.XRichTextEditor_x_rich_padding).toString().endsWith("dip")) {
+            padding = padding / density;
+        }
+
+        if (ta.getText(R.styleable.XRichTextEditor_x_rich_paddingLeft) != null && ta.getText(R.styleable.XRichTextEditor_x_rich_paddingLeft).toString().endsWith("dip")) {
+            paddingLeft = padding / density;
+        }
+
+        if (ta.getText(R.styleable.XRichTextEditor_x_rich_paddingRight) != null && ta.getText(R.styleable.XRichTextEditor_x_rich_paddingRight).toString().endsWith("dip")) {
+            paddingRight = padding / density;
+        }
+
+        if (ta.getText(R.styleable.XRichTextEditor_x_rich_paddingBottom) != null && ta.getText(R.styleable.XRichTextEditor_x_rich_paddingBottom).toString().endsWith("dip")) {
+            paddingTop = padding / density;
+        }
+
+        if (ta.getText(R.styleable.XRichTextEditor_x_rich_padding) != null && ta.getText(R.styleable.XRichTextEditor_x_rich_padding).toString().endsWith("dip")) {
+            paddingBottom = padding / density;
+        }
+
+
+        ta.recycle();
+
+        if (padding != 0) {
+            paddingLeft = padding;
+            paddingRight = padding;
+            paddingTop = padding;
+            paddingBottom = padding;
+        }
+
+        mEditor.setPadding((int) paddingLeft, (int) paddingTop, (int) paddingRight, (int) paddingBottom);
         mEditor.focusEditor();
 
         mEditor.setWebChromeClient(new WebChromeClient() {

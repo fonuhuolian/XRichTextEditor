@@ -17,7 +17,7 @@ allprojects {
 ```
 `module build.gradle `
 ```
-implementation 'com.github.fonuhuolian:XRichTextEditor:1.2.4'
+implementation 'com.github.fonuhuolian:XRichTextEditor:1.2.5'
 ```
 
 二、xml
@@ -26,7 +26,8 @@ implementation 'com.github.fonuhuolian:XRichTextEditor:1.2.4'
 <org.fonuhuolian.xrichtexteditor.XRichTextEditor
   android:id="@+id/editor"
   android:layout_width="match_parent"
-  android:layout_height="match_parent" />
+  android:layout_height="match_parent"
+  app:x_rich_padding="10dp"/>
 ```
 
 三、代码

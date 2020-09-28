@@ -5,4 +5,13 @@
         <attr name="roundColor" format="color|reference" />
     </declare-styleable>
 
+
+    <declare-styleable name="XRichTextEditor">
+        <attr name="x_rich_padding" format="dimension" />
+        <attr name="x_rich_paddingLeft" format="dimension" />
+        <attr name="x_rich_paddingRight" format="dimension" />
+        <attr name="x_rich_paddingTop" format="dimension" />
+        <attr name="x_rich_paddingBottom" format="dimension" />
+    </declare-styleable>
+
 </resources>

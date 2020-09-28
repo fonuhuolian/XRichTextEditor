@@ -49,7 +49,7 @@ xEditor.isLoadComplete();
 xEditor.getHtmlText();
 // 转换成Email样式的html文本
 XRichTextEditor.covertEmailHtml(String quotations, String contentHtml);
-// 转换超文本转换为普通文字
+// 超文本转换为普通文字
 XRichTextEditor.convertHTMLToText(String htmlStr);
 ```
 四、感谢 `wasabeef`提供富文本库

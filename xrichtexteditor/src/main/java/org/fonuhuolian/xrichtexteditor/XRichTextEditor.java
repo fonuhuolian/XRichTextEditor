@@ -102,19 +102,19 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
         }
 
         if (ta.getText(R.styleable.XRichTextEditor_x_rich_paddingLeft) != null && ta.getText(R.styleable.XRichTextEditor_x_rich_paddingLeft).toString().endsWith("dip")) {
-            paddingLeft = padding / density;
+            paddingLeft = paddingLeft / density;
         }
 
         if (ta.getText(R.styleable.XRichTextEditor_x_rich_paddingRight) != null && ta.getText(R.styleable.XRichTextEditor_x_rich_paddingRight).toString().endsWith("dip")) {
-            paddingRight = padding / density;
+            paddingRight = paddingRight / density;
+        }
+
+        if (ta.getText(R.styleable.XRichTextEditor_x_rich_paddingTop) != null && ta.getText(R.styleable.XRichTextEditor_x_rich_paddingTop).toString().endsWith("dip")) {
+            paddingTop = paddingTop / density;
         }
 
         if (ta.getText(R.styleable.XRichTextEditor_x_rich_paddingBottom) != null && ta.getText(R.styleable.XRichTextEditor_x_rich_paddingBottom).toString().endsWith("dip")) {
-            paddingTop = padding / density;
-        }
-
-        if (ta.getText(R.styleable.XRichTextEditor_x_rich_padding) != null && ta.getText(R.styleable.XRichTextEditor_x_rich_padding).toString().endsWith("dip")) {
-            paddingBottom = padding / density;
+            paddingBottom = paddingBottom / density;
         }
 
 

@@ -17,7 +17,7 @@ allprojects {
 ```
 `module build.gradle `
 ```
-implementation 'com.github.fonuhuolian:XRichTextEditor:1.2.5'
+implementation 'com.github.fonuhuolian:XRichTextEditor:1.2.6'
 ```
 
 二、xml

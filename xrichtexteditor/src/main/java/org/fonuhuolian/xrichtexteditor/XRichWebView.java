@@ -144,6 +144,9 @@ public class XRichWebView extends FrameLayout {
         return isLoadComplete;
     }
 
+    public WebView getWebView() {
+        return mEditor;
+    }
 
     public void setContent(String htmlText) {
         mEditor.setHtml(htmlText);

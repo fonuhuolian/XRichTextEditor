@@ -17,7 +17,7 @@ allprojects {
 ```
 `module build.gradle `
 ```
-implementation 'com.github.fonuhuolian:XRichTextEditor:1.2.7'
+implementation 'com.github.fonuhuolian:XRichTextEditor:1.2.8'
 ```
 
 二、xml
@@ -73,6 +73,8 @@ xRichWebview.setContent();
 xRichWebview.isLoadComplete();
 // 获取富文本的html文本
 xRichWebview.getHtmlText();
+// 获取WebView
+xRichWebview.getWebView();
 // 转换成Email样式的html文本
 XRichWebView.covertEmailHtml(String quotations, String contentHtml);
 // 超文本转换为普通文字

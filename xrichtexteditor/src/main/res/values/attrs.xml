@@ -14,4 +14,13 @@
         <attr name="x_rich_paddingBottom" format="dimension" />
     </declare-styleable>
 
+
+    <declare-styleable name="XRichWebView">
+        <attr name="x_rich_web_padding" format="dimension" />
+        <attr name="x_rich_web_paddingLeft" format="dimension" />
+        <attr name="x_rich_web_paddingRight" format="dimension" />
+        <attr name="x_rich_web_paddingTop" format="dimension" />
+        <attr name="x_rich_web_paddingBottom" format="dimension" />
+    </declare-styleable>
+
 </resources>

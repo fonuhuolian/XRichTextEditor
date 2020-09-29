@@ -17,22 +17,32 @@ allprojects {
 ```
 `module build.gradle `
 ```
-implementation 'com.github.fonuhuolian:XRichTextEditor:1.2.6'
+implementation 'com.github.fonuhuolian:XRichTextEditor:1.2.7'
 ```
 
 二、xml
 
 ```
+<!--可输入-->
 <org.fonuhuolian.xrichtexteditor.XRichTextEditor
   android:id="@+id/editor"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   app:x_rich_padding="10dp"/>
 ```
+```
+<!--不可输入-->
+<org.fonuhuolian.xrichtexteditor.XRichWebView
+  android:id="@+id/e"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  app:x_rich_web_padding="10dp"/>
+```
 
 三、代码
 
 ```
+// ******可输入******
 // 富文本导航栏点击图片按钮的事件
 xEditor.setListener(new XRichPicIconClickListener() {
   @Override
@@ -53,6 +63,22 @@ XRichTextEditor.covertEmailHtml(String quotations, String contentHtml);
 // 超文本转换为普通文字
 XRichTextEditor.convertHTMLToText(String htmlStr);
 ```
+
+```
+// ******不可输入******
+
+// 加载富文本内容
+xRichWebview.setContent();
+// 富文本内容是否加载完成
+xRichWebview.isLoadComplete();
+// 获取富文本的html文本
+xRichWebview.getHtmlText();
+// 转换成Email样式的html文本
+XRichWebView.covertEmailHtml(String quotations, String contentHtml);
+// 超文本转换为普通文字
+XRichWebView.convertHTMLToText(String htmlStr);
+```
+
 四、感谢 `wasabeef`提供富文本库
 
 

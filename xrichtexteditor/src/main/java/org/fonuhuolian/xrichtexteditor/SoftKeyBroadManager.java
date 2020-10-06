@@ -27,6 +27,8 @@ public class SoftKeyBroadManager implements ViewTreeObserver.OnGlobalLayoutListe
     private int navigationBarHeight = 0;
     private Context activity;
 
+    private int realKeyBoardHeight = 0;
+
     public SoftKeyBroadManager(Context activity, View activityRootView) {
         this(activity, activityRootView, false);
     }
@@ -114,13 +116,17 @@ public class SoftKeyBroadManager implements ViewTreeObserver.OnGlobalLayoutListe
         return isSoftKeyboardOpened;
     }
 
+    public int getRealKeyBoardHeight() {
+        return realKeyBoardHeight;
+    }
 
     public int getLastSoftKeyboardHeightInPx() {
         return lastSoftKeyboardHeightInPx;
     }
 
-    public void addSoftKeyboardStateListener(SoftKeyboardStateListener listener) {
+    public SoftKeyBroadManager addSoftKeyboardStateListener(SoftKeyboardStateListener listener) {
         listeners.add(listener);
+        return this;
     }
 
     public void removeSoftKeyboardStateListener(SoftKeyboardStateListener listener) {
@@ -129,6 +135,7 @@ public class SoftKeyBroadManager implements ViewTreeObserver.OnGlobalLayoutListe
 
     private void notifyOnSoftKeyboardOpened(int keyboardHeightInPx, int heightVisible, int statusBarHeight, int navigationBarHeight) {
         this.lastSoftKeyboardHeightInPx = keyboardHeightInPx;
+        this.realKeyBoardHeight = keyboardHeightInPx;
 
         for (SoftKeyboardStateListener listener : listeners) {
             if (listener != null) {

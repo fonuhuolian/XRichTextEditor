@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -20,6 +21,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
+import java.lang.reflect.Field;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -54,6 +56,8 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
     private boolean isRevised = false;
 
     private int RICK_LAYOUT_HEIGHT = 0;
+
+    private SoftKeyBroadManager mKeyboardListener;
 
     public XRichTextEditor(Context context) {
         this(context, null);
@@ -172,7 +176,8 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
             }
         });
 
-        new SoftKeyBroadManager(mContext, this).addSoftKeyboardStateListener(new SoftKeyBroadManager.SoftKeyboardStateListener() {
+
+        mKeyboardListener = new SoftKeyBroadManager(mContext, this).addSoftKeyboardStateListener(new SoftKeyBroadManager.SoftKeyboardStateListener() {
             @Override
             public void onSoftKeyboardOpened(int keyboardHeightInPx, int heightVisible, int statusBarHeight, int navigationBarHeight) {
                 ViewGroup.LayoutParams layoutParams = mRootLayout.getLayoutParams();
@@ -537,13 +542,56 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
     }
 
 
-    // TODO 跳转页面onActivityResult 同步进行 调用此方法
-    // TODO　跳转页面不管是否需要返回值，都一定义使用startActivityForResult（）方式进行跳转
-    public void onActivityResult() {
-        ViewGroup.LayoutParams layoutParams = mRootLayout.getLayoutParams();
-        layoutParams.height = RICK_LAYOUT_HEIGHT;
-        mRootLayout.setLayoutParams(layoutParams);
-        mLayout.setVisibility(VISIBLE);
+    // TODO 生命周期进行调用
+    public void onResume() {
+
+        if (mKeyboardListener == null)
+            return;
+
+        final Rect r = new Rect();
+        this.getRootView().getWindowVisibleDisplayFrame(r);
+
+        int height = getRootView().getHeight();
+
+
+        // 不可见区域
+        final int rootHeightDiff = height - (r.bottom - r.top);
+        // 可见区域
+        int rootHeightVisible = height - rootHeightDiff;
+
+        if (rootHeightDiff > 500) {
+            // 当前键盘开启中
+
+            if (this.getHeight() < RICK_LAYOUT_HEIGHT) {
+                // 当前控件高度 < 全展开高度时 说明当前布局为键盘开启状态
+                mKeyboardListener.setIsSoftKeyboardOpened(true);
+            } else {
+                // 当前控件为关闭键盘状态
+                mKeyboardListener.setIsSoftKeyboardOpened(true);
+
+
+                ViewGroup.LayoutParams layoutParams = mRootLayout.getLayoutParams();
+                layoutParams.height = RICK_LAYOUT_HEIGHT - mKeyboardListener.getRealKeyBoardHeight();
+                mRootLayout.setLayoutParams(layoutParams);
+            }
+
+        } else {
+            // 当前键盘关闭中
+
+            if (this.getHeight() < RICK_LAYOUT_HEIGHT) {
+                // 当前控件高度 < 全展开高度时 说明当前布局为键盘开启状态
+                mKeyboardListener.setIsSoftKeyboardOpened(false);
+
+                ViewGroup.LayoutParams layoutParams = mRootLayout.getLayoutParams();
+                layoutParams.height = RICK_LAYOUT_HEIGHT;
+                mRootLayout.setLayoutParams(layoutParams);
+                mLayout.setVisibility(VISIBLE);
+
+            } else {
+                // 当前控件为关闭键盘状态
+                mKeyboardListener.setIsSoftKeyboardOpened(false);
+            }
+        }
     }
 
     @Override

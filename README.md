@@ -17,7 +17,7 @@ allprojects {
 ```
 `module build.gradle `
 ```
-implementation 'com.github.fonuhuolian:XRichTextEditor:1.2.9'
+implementation 'com.github.fonuhuolian:XRichTextEditor:1.3.0'
 ```
 
 二、xml
@@ -62,11 +62,11 @@ xEditor.getHtmlText();
 XRichTextEditor.covertEmailHtml(String quotations, String contentHtml);
 // 超文本转换为普通文字
 XRichTextEditor.convertHTMLToText(String htmlStr);
-//　跳转页面一直要使用startActivityForResult（）方式，并在回调处调用同名方法
+// 请一定在生命周期调用同名方法
 @Override
-protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-  super.onActivityResult(requestCode, resultCode, data);
-  xEditor.onActivityResult();
+protected void onResume() {
+  super.onResume();
+  editor.onResume();
 }
 ```
 

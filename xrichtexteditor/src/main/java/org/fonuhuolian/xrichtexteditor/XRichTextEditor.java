@@ -536,11 +536,14 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
         mEditor.setHtml(htmlText);
     }
 
-    public void onRestart() {
 
-        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mLayout.getLayoutParams();
-        layoutParams.bottomMargin = 0;
-        mLayout.setLayoutParams(layoutParams);
+    // TODO 跳转页面onActivityResult 同步进行 调用此方法
+    // TODO　跳转页面不管是否需要返回值，都一定义使用startActivityForResult（）方式进行跳转
+    public void onActivityResult() {
+        ViewGroup.LayoutParams layoutParams = mRootLayout.getLayoutParams();
+        layoutParams.height = RICK_LAYOUT_HEIGHT;
+        mRootLayout.setLayoutParams(layoutParams);
+        mLayout.setVisibility(VISIBLE);
     }
 
     @Override

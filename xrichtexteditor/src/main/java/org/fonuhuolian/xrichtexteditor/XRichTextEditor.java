@@ -478,7 +478,7 @@ public class XRichTextEditor extends FrameLayout implements View.OnClickListener
         quotations = quotations.replaceAll("\n", "<br>");
         quotations = quotations.replaceAll("\\\\r", "<br>");
         quotations = quotations.replaceAll("\r", "<br>");
-        quotations = "<br><br><br><br><font color=\"#282828\" size=\"2\"><b>--原始邮件--<br><br></b></font><span style=\"background-color: #F1F1F1;width:calc(100% - 24px);display:-moz-inline-box;display:inline-block;border-radius:5px;padding:10px 5px 15px 20px;line-height:23px;font-size:13px;\">" + quotations;
+        quotations = "<br><br><br><br><font color=\"#282828\" size=\"2\"><b>--原始内容--<br><br></b></font><span style=\"background-color: #F1F1F1;width:calc(100% - 24px);display:-moz-inline-box;display:inline-block;border-radius:5px;padding:10px 5px 15px 20px;line-height:23px;font-size:13px;\">" + quotations;
         quotations = quotations + "</span><br><br><br><br>";
         quotations = quotations + contentHtml;
 
